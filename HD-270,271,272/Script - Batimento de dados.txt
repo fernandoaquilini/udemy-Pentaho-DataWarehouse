@@ -1,0 +1,42 @@
+-- comandos batimento de dados
+-- curso PENTAHO PDI para Data Warehouse
+-- Prof. Grimaldo Oliveira - grimaldo_lopes@hotmail.com
+
+-- VERIFICANDO SE O DATA WAREHOUSE CONSEGUE REGISTRAR
+-- INFORMAÇÕES INCONSISTENTES SK=-1
+--  PARA ISSO ALTERAREMOS O CODIGO DO DEPARTAMENTO PARA 28 NA ID_VENDA=5
+
+select * from stg_venda
+select * from stg_venda WHERE id_venda=5
+select * from dim_departamento
+update stg_venda set cod_departamento=28 WHERE id_venda=5
+
+select * from stg_venda WHERE id_venda=5;
+select * from fat_venda where id_venda=5;
+
+
+-- VERIFICANDO SE A CARGA DA FATO VENDA, CONSEGUE IDENTIFICAR
+-- QUAL A CHAVE SK DA DIMENSAO PRODUTO, DE ACORDO COM O DIA DA VENDA
+-- CRIAREMOS UMA VENDA NO DIA 20230524
+
+-- DE ACORDO COM A EPOCA QUE ESTEJA ESTUDANDO O CURSO, VERIFIQUE QUAL A DATA MAIS PROPRIADA
+-- OBSERVANDO O VERSIONAMENTO NA DIMENSAO PRODUTO
+-- PARA QUE POSSA SER ALTERADA A DTC_VENDA NA STG_VENDA
+
+select * from dim_produto
+update stg_venda set cod_produto=1,dtc_venda=to_date('20230524','YYYYMMDD') WHERE id_venda=5
+select * from stg_venda WHERE id_venda=5;
+select * from dim_produto
+select * from fat_venda where id_venda=5;
+
+-- VERIFICANDO SE OS DADOS CARREGADOS DE TODAS AS DIMENSÕES ESTÃO CORRETOS
+
+select * from stg_venda WHERE id_venda=30
+select cod_vendedor, sk_vendedor from dim_vendedor where cod_vendedor=12   
+select * from stg_venda WHERE id_venda=30
+select cod_produto, sk_produto from dim_produto where cod_produto=5   
+select * from stg_venda WHERE id_venda=30
+select cod_departamento, sk_departamento from dim_departamento where cod_departamento=6   
+select * from stg_venda WHERE id_venda=30
+select data, sk_tempo from dim_tempo where data=to_date('20150924','YYYYMMDD')  
+select * from fat_venda where id_venda=30

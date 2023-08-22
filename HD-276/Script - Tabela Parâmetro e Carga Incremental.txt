@@ -1,0 +1,10 @@
+CREATE TABLE public.stg_parametro
+(
+    dtc_parametro date
+    )
+
+INSERT INTO stg_parametro(
+	dtc_parametro)
+	VALUES ('2015-01-01');
+
+update stg_parametro SET dtc_parametro = date_trunc('day',now()) + INTERVAL '1 day';

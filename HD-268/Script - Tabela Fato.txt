@@ -1,0 +1,20 @@
+-- criacao tabela FATO
+-- curso PENTAHO PDI para Data Warehouse
+-- Prof. Grimaldo Oliveira - grimaldo_lopes@hotmail.com
+
+ CREATE TABLE fat_venda (
+  id_venda integer NOT NULL,
+  num_nota integer NOT NULL,
+  sk_tempo integer NULL,
+  sk_produto integer NULL,
+  sk_vendedor integer NULL,
+  sk_departamento integer NULL,
+  qtd_venda integer DEFAULT NULL,
+  val_venda decimal(10,2) DEFAULT NULL,
+  CONSTRAINT id_venda_pkey PRIMARY KEY (id_venda),
+  -- Adição das referências de chave estrangeira
+  CONSTRAINT fk_tempo FOREIGN KEY (sk_tempo) REFERENCES dim_tempo(sk_tempo),
+  CONSTRAINT fk_produto FOREIGN KEY (sk_produto) REFERENCES dim_produto(sk_produto),
+  CONSTRAINT fk_vendedor FOREIGN KEY (sk_vendedor) REFERENCES dim_vendedor(sk_vendedor),
+  CONSTRAINT fk_departamento FOREIGN KEY (sk_departamento) REFERENCES dim_departamento(sk_departamento)
+);
